@@ -1,0 +1,450 @@
+{
+    "page": {
+      "id": "product_details",
+      "title": "Product Details",
+      "theme": {
+        "primary": "#04C7D0",
+        "secondary": "#4B708E",
+        "success": "#28C481",
+        "error": "#F55A3D",
+        "warning": "#FFC233",
+        "background": "#F8F8F9",
+        "surface": "#FFFFFF",
+        "typography": {
+          "headlineLarge": {
+            "fontFamily": "Inter",
+            "fontSize": 24,
+            "fontWeight": "bold"
+          },
+          "headlineMedium": {
+            "fontFamily": "Inter",
+            "fontSize": 20,
+            "fontWeight": "semibold"
+          },
+          "bodyLarge": {
+            "fontFamily": "Inter",
+            "fontSize": 16,
+            "fontWeight": "normal"
+          },
+          "bodyMedium": {
+            "fontFamily": "Inter",
+            "fontSize": 14,
+            "fontWeight": "normal"
+          },
+          "bodySmall": {
+            "fontFamily": "Inter",
+            "fontSize": 12,
+            "fontWeight": "normal"
+          }
+        }
+      },
+      "components": [
+        {
+          "type": "header",
+          "id": "app_header",
+          "props": {
+            "title": "Product Details",
+            "showBackButton": true,
+            "showSearchButton": true,
+            "style": {
+              "backgroundColor": "#FFFFFF",
+              "titleColor": "#141416",
+              "iconColor": "#4A4A54"
+            }
+          }
+        },
+        {
+          "type": "image_gallery",
+          "id": "product_images",
+          "props": {
+            "images": [
+              {
+                "url": "https://prd.place/400?id=37",
+                "thumbnail": "https://prd.place/60?id=37",
+                "alt": "Nahoa Disposable Pull Ups XXL Unisex - Main View"
+              },
+              {
+                "url": "https://prd.place/400?id=12",
+                "thumbnail": "https://prd.place/60?id=12",
+                "alt": "Nahoa Disposable Pull Ups XXL Unisex - Side View"
+              },
+              {
+                "url": "https://prd.place/400?id=25",
+                "thumbnail": "https://prd.place/60?id=25",
+                "alt": "Nahoa Disposable Pull Ups XXL Unisex - Detail View"
+              },
+              {
+                "url": "https://prd.place/400?id=8",
+                "thumbnail": "https://prd.place/60?id=8",
+                "alt": "Nahoa Disposable Pull Ups XXL Unisex - Package View"
+              }
+            ],
+            "style": {
+              "height": 320,
+              "cornerRadius": 0,
+              "showIndicators": true,
+              "showDiscountBadge": true,
+              "showShareButton": true
+            }
+          }
+        },
+        {
+          "type": "product_info",
+          "id": "basic_product_info",
+          "props": {
+            "category": {
+              "name": "Daily Care",
+              "style": {
+                "backgroundColor": "rgba(4, 199, 208, 0.1)",
+                "textColor": "#04C7D0",
+                "cornerRadius": 20,
+                "padding": "8,12"
+              }
+            },
+            "brand": {
+              "name": "Nahoa",
+              "style": {
+                "backgroundColor": "rgba(4, 199, 208, 0.15)",
+                "textColor": "#04C7D0",
+                "cornerRadius": 20,
+                "padding": "4,8"
+              }
+            },
+            "stock": {
+              "status": "In Stock",
+              "quantity": 24,
+              "unit": "units",
+              "style": {
+                "backgroundColor": "rgba(40, 196, 129, 0.12)",
+                "textColor": "#0E875B",
+                "cornerRadius": 8,
+                "padding": "4,8"
+              }
+            },
+            "title": "Nahoa Disposable Pull Ups - XXL Unisex",
+            "price": {
+              "current": 50,
+              "original": 60,
+              "currency": "₹",
+              "savings": 10,
+              "discountPercentage": 17
+            },
+            "productCodes": {
+              "productCode": "NH0005",
+              "sku": "THPL-NH-05"
+            },
+            "style": {
+              "padding": 16,
+              "spacing": 12
+            }
+          }
+        },
+        {
+          "type": "ratings",
+          "id": "product_ratings",
+          "props": {
+            "rating": 4.5,
+            "maxRating": 5,
+            "reviewCount": 12,
+            "showViewAll": true,
+            "style": {
+              "padding": 16,
+              "starColor": "#FFC233",
+              "textColor": "#4A4A54"
+            }
+          }
+        },
+        {
+          "type": "variant_selector",
+          "id": "product_variants",
+          "props": {
+            "sizes": [
+              {
+                "id": "xl",
+                "label": "XL",
+                "available": true,
+                "selected": false
+              },
+              {
+                "id": "xxl",
+                "label": "XXL",
+                "available": true,
+                "selected": true
+              },
+              {
+                "id": "xxxl",
+                "label": "XXXL",
+                "available": true,
+                "selected": false
+              }
+            ],
+            "style": {
+              "padding": 16,
+              "spacing": 8,
+              "selectedStyle": {
+                "backgroundColor": "rgba(4, 199, 208, 0.1)",
+                "borderColor": "#04C7D0",
+                "textColor": "#027A80"
+              }
+            }
+          }
+        },
+        {
+          "type": "offer_timer",
+          "id": "limited_time_offer",
+          "props": {
+            "title": "Limited Time Offer",
+            "endTime": "23:45:12",
+            "icon": "zap",
+            "style": {
+              "background": "linear-gradient(135deg, #04C7D0, #03A2AA)",
+              "textColor": "#FFFFFF",
+              "timerBackground": "#FFFFFF",
+              "timerTextColor": "#03A2AA",
+              "cornerRadius": 8,
+              "padding": 16
+            }
+          }
+        },
+        {
+          "type": "product_details",
+          "id": "detailed_specifications",
+          "props": {
+            "title": "Product Details",
+            "details": [
+              {
+                "icon": "package",
+                "label": "Material",
+                "value": "Non Woven",
+                "iconColor": "#4B708E"
+              },
+              {
+                "icon": "users",
+                "label": "Gender",
+                "value": "Unisex",
+                "iconColor": "#28C481"
+              },
+              {
+                "icon": "recycle",
+                "label": "Condition",
+                "value": "Disposable",
+                "iconColor": "#1A9FDD"
+              },
+              {
+                "icon": "tag",
+                "label": "Type",
+                "value": "Pull Ups",
+                "iconColor": "#FFC233"
+              },
+              {
+                "icon": "box",
+                "label": "Packaging",
+                "value": "Box (2 Pants)",
+                "iconColor": "#04C7D0"
+              }
+            ],
+            "style": {
+              "padding": 16,
+              "itemSpacing": 12,
+              "itemPadding": 12,
+              "itemBackground": "#F8F8F9",
+              "itemCornerRadius": 8
+            }
+          }
+        },
+        {
+          "type": "features_list",
+          "id": "key_features",
+          "props": {
+            "title": "Key Features",
+            "features": [
+              {
+                "icon": "droplets",
+                "title": "Super Absorbent",
+                "iconColor": "#FFC233"
+              },
+              {
+                "icon": "wind",
+                "title": "Breathable",
+                "iconColor": "#28C481"
+              },
+              {
+                "icon": "heart",
+                "title": "Soft & Gentle",
+                "iconColor": "#1A9FDD"
+              },
+              {
+                "icon": "shield",
+                "title": "Leak Protection",
+                "iconColor": "#4B708E"
+              }
+            ],
+            "style": {
+              "layout": "grid",
+              "columns": 2,
+              "spacing": 12,
+              "itemPadding": 12,
+              "itemBackground": "#F8F8F9",
+              "itemCornerRadius": 8
+            }
+          }
+        },
+        {
+          "type": "action_buttons",
+          "id": "bottom_actions",
+          "props": {
+            "buttons": [
+              {
+                "id": "favorite",
+                "type": "icon",
+                "icon": "heart",
+                "action": "toggle_favorite",
+                "style": {
+                  "backgroundColor": "#E8E8EC",
+                  "iconColor": "#6E6E7A",
+                  "size": 48,
+                  "cornerRadius": 24
+                }
+              },
+              {
+                "id": "add_to_cart",
+                "type": "primary",
+                "text": "Add to Cart",
+                "icon": "shopping-cart",
+                "action": "add_to_cart",
+                "style": {
+                  "backgroundColor": "#04C7D0",
+                  "textColor": "#FFFFFF",
+                  "cornerRadius": 24,
+                  "flex": 1
+                }
+              },
+              {
+                "id": "share",
+                "type": "icon",
+                "icon": "share-2",
+                "action": "share_product",
+                "style": {
+                  "backgroundColor": "#E8E8EC",
+                  "iconColor": "#6E6E7A",
+                  "size": 48,
+                  "cornerRadius": 24
+                }
+              }
+            ],
+            "layout": "horizontal",
+            "spacing": 12,
+            "style": {
+              "position": "fixed",
+              "bottom": 0,
+              "padding": 16,
+              "backgroundColor": "#FFFFFF",
+              "borderTop": "1px solid #E8E8EC",
+              "shadow": "large"
+            }
+          }
+        }
+      ]
+    },
+    "product": {
+      "id": "nahoa_pullups_xxl_unisex",
+      "name": "Nahoa Disposable Pull Ups - XXL Unisex",
+      "brand": "Nahoa",
+      "category": "Daily Care",
+      "price": {
+        "current": 50.00,
+        "original": 60.00,
+        "currency": "INR",
+        "currencySymbol": "₹"
+      },
+      "images": [
+        "https://prd.place/400?id=37",
+        "https://prd.place/400?id=12",
+        "https://prd.place/400?id=25",
+        "https://prd.place/400?id=8"
+      ],
+      "thumbnails": [
+        "https://prd.place/60?id=37",
+        "https://prd.place/60?id=12",
+        "https://prd.place/60?id=25",
+        "https://prd.place/60?id=8"
+      ],
+      "description": "Premium quality disposable pull-ups designed for maximum comfort and protection. Made with soft, breathable non-woven material that provides excellent absorption while maintaining skin-friendly properties.",
+      "specifications": {
+        "material": "Non Woven",
+        "gender": "Unisex",
+        "condition": "Disposable",
+        "type": "Pull Ups",
+        "packaging": "Box",
+        "quantity": "2 Pants",
+        "size": "XXL"
+      },
+      "features": [
+        "Super Absorbent Core",
+        "Breathable Material",
+        "Soft & Gentle on Skin",
+        "Advanced Leak Protection",
+        "Easy Pull-Up Design",
+        "Hypoallergenic"
+      ],
+      "variants": {
+        "sizes": ["XL", "XXL", "XXXL"]
+      },
+      "stock": {
+        "status": "in_stock",
+        "quantity": 24,
+        "lowStockThreshold": 5
+      },
+      "rating": {
+        "average": 4.5,
+        "count": 12,
+        "distribution": {
+          "5": 8,
+          "4": 3,
+          "3": 1,
+          "2": 0,
+          "1": 0
+        }
+      },
+      "metadata": {
+        "productCode": "NH0005",
+        "sku": "THPL-NH-05",
+        "weight": "0.2kg",
+        "dimensions": "25x15x10cm",
+        "manufacturer": "Nahoa Healthcare",
+        "countryOfOrigin": "India"
+      },
+      "seo": {
+        "title": "Nahoa Disposable Pull Ups XXL Unisex - Super Absorbent & Comfortable",
+        "description": "Buy Nahoa XXL Unisex Disposable Pull Ups online. Super absorbent, breathable, and gentle on skin. Perfect for daily care needs. Fast delivery available.",
+        "keywords": ["disposable pull ups", "unisex", "XXL", "nahoa", "daily care", "absorbent"]
+      },
+      "availability": {
+        "status": "available",
+        "estimatedDelivery": "2-3 business days",
+        "regions": ["All India"]
+      }
+    },
+    "ui_config": {
+      "animations": {
+        "enabled": true,
+        "duration": 300,
+        "easing": "ease-in-out"
+      },
+      "interactions": {
+        "hapticFeedback": true,
+        "soundEffects": false
+      },
+      "accessibility": {
+        "highContrast": false,
+        "fontSize": "medium",
+        "screenReader": true
+      },
+      "layout": {
+        "maxWidth": 428,
+        "padding": 16,
+        "spacing": 12
+      }
+    }
+  }
+  

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Product Details - Tarrina App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            /* Neutral Colors */
+            --neutral-100: #FFFFFF;
+            --neutral-200: #F8F8F9;
+            --neutral-300: #E8E8EC;
+            --neutral-400: #C5C5CE;
+            --neutral-500: #9F9FAC;
+            --neutral-600: #6E6E7A;
+            --neutral-700: #4A4A54;
+            --neutral-800: #26262C;
+            --neutral-900: #141416;
+            
+            /* Primary Colors */
+            --primary-100: #E5F8F9;
+            --primary-200: #A6EBF0;
+            --primary-300: #66DDE3;
+            --primary-400: #04C7D0;
+            --primary-500: #03A2AA;
+            --primary-600: #027A80;
+            
+            /* Secondary Colors */
+            --secondary-100: #EEF4F8;
+            --secondary-200: #C8D8E3;
+            --secondary-300: #9DB7C7;
+            --secondary-400: #7296AB;
+            --secondary-500: #4B708E;
+            --secondary-600: #2E4F6F;
+            
+            /* Accent Colors */
+            --accent-100: #E5F2F9;
+            --accent-200: #B3E0F2;
+            --accent-300: #80CCEB;
+            --accent-400: #4DB8E5;
+            --accent-500: #1A9FDD;
+            
+            /* Status Colors */
+            --success-100: #E7F9F1;
+            --success-200: #B5EDD4;
+            --success-300: #84E1B7;
+            --success-400: #28C481;
+            --success-500: #1AA66C;
+            --success-600: #0E875B;
+            
+            --error-100: #FEE7E1;
+            --error-200: #FCBEB2;
+            --error-300: #FA9583;
+            --error-400: #F55A3D;
+            --error-500: #DC3A0C;
+            --error-600: #B32705;
+            
+            --warning-100: #FFF8E6;
+            --warning-200: #FFE9B2;
+            --warning-300: #FFDA80;
+            --warning-400: #FFC233;
+            --warning-500: #E6A60D;
+            --warning-600: #CC8800;
+            
+            --info-100: #E8F4FF;
+            --info-200: #BBE0FF;
+            --info-300: #8DCCFF;
+            --info-400: #45ADFF;
+            --info-500: #1E90FF;
+            --info-600: #0077EA;
+            
+            /* Elevations */
+            --elevation-small: 0 2px 4px rgba(31, 31, 37, 0.05);
+            --elevation-medium: 0 4px 8px rgba(31, 31, 37, 0.1);
+            --elevation-large: 0 8px 16px rgba(31, 31, 37, 0.15);
+            --elevation-xlarge: 0 12px 24px rgba(31, 31, 37, 0.2);
+        }
+
+        .brand-primary { background-color: var(--primary-400); }
+        .brand-primary-light { background-color: var(--primary-100); }
+        .brand-secondary { background-color: var(--secondary-500); }
+        .brand-accent { background-color: var(--accent-500); }
+        .brand-success { background-color: var(--success-400); }
+        .brand-error { background-color: var(--error-400); }
+        .brand-warning { background-color: var(--warning-400); }
+        
+        .text-primary { color: var(--primary-400); }
+        .text-secondary { color: var(--secondary-500); }
+        .text-neutral-600 { color: var(--neutral-600); }
+        .text-neutral-700 { color: var(--neutral-700); }
+        .text-neutral-800 { color: var(--neutral-800); }
+        .text-neutral-900 { color: var(--neutral-900); }
+        
+        .border-primary { border-color: var(--primary-400); }
+        .border-neutral-300 { border-color: var(--neutral-300); }
+        .border-neutral-200 { border-color: var(--neutral-200); }
+        
+        .bg-neutral-100 { background-color: var(--neutral-100); }
+        .bg-neutral-200 { background-color: var(--neutral-200); }
+        .bg-neutral-300 { background-color: var(--neutral-300); }
+          .shadow-elevation-small { box-shadow: var(--elevation-small); }
+        .shadow-elevation-medium { box-shadow: var(--elevation-medium); }
+        .shadow-elevation-large { box-shadow: var(--elevation-large); }
+        
+        .size-option {
+            transition: all 0.2s ease;
+        }
+        
+        .size-option:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--elevation-medium);
+        }
+        
+        .size-option.selected {
+            background-color: var(--primary-100);
+            border-color: var(--primary-400);
+            color: var(--primary-600);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .bounce-in {
+            animation: bounceIn 0.3s ease;
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .gradient-primary {
+            background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+        }
+        
+        .gradient-error {
+            background: linear-gradient(135deg, var(--error-400), var(--error-500));
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-neutral-200 font-sans">
+    <!-- Container -->
+    <div class="max-w-sm mx-auto bg-neutral-100 shadow-elevation-xlarge min-h-screen relative">
+        
+        <!-- Header Navigation -->
+        <header class="flex items-center justify-between p-4 bg-neutral-100 border-b border-neutral-200 sticky top-0 z-10">
+            <button class="p-2 rounded-full hover:bg-neutral-200 transition-colors">
+                <i data-lucide="arrow-left" class="text-neutral-700 w-5 h-5"></i>
+            </button>
+            <h1 class="text-lg font-semibold text-neutral-900">Product Details</h1>
+            <button class="p-2 rounded-full hover:bg-neutral-200 transition-colors">
+                <i data-lucide="search" class="text-neutral-700 w-5 h-5"></i>
+            </button>
+        </header>
+
+        <!-- Image Slider Section -->
+        <section class="relative bg-neutral-200">
+            <!-- Main Product Image -->
+            <div class="relative h-80 overflow-hidden">      
+                <!-- We are using placeholder images, in your tech assessment, please use anything you like -->
+                <img src="https://prd.place/400?id=37" 
+                     alt="Nahoa Disposable Pull Ups XXL Unisex" 
+                     class="w-full h-full object-cover transition-transform duration-300 hover:scale-105">
+                
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <div class="w-2 h-2 bg-neutral-100 rounded-full opacity-100 shadow-elevation-small"></div>
+                    <div class="w-2 h-2 bg-neutral-100 rounded-full opacity-50"></div>
+                    <div class="w-2 h-2 bg-neutral-100 rounded-full opacity-50"></div>
+                    <div class="w-2 h-2 bg-neutral-100 rounded-full opacity-50"></div>
+                </div>                
+                <!-- Discount Badge -->
+                <div class="absolute top-4 left-4 gradient-error text-white px-3 py-1 rounded-full text-sm font-semibold shadow-elevation-medium bounce-in">
+                    -17%
+                </div>
+
+                <!-- Share Button -->
+                <button class="absolute top-4 right-4 bg-neutral-100 bg-opacity-90 backdrop-blur-sm p-2 rounded-full shadow-elevation-small hover:bg-opacity-100 transition-all">
+                    <i data-lucide="share-2" class="text-neutral-700 w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- We are using placeholder images, in your tech assessment, please use anything you like, make sure the slider image selection works. -->
+
+            <!-- Thumbnail Images -->
+            <div class="flex space-x-3 p-4 overflow-x-auto">
+                <img src="https://prd.place/60?id=37" class="w-15 h-15 rounded-lg border-2 border-primary-400 flex-shrink-0 shadow-elevation-small">
+                <img src="https://prd.place/60?id=12" class="w-15 h-15 rounded-lg border border-neutral-300 flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+                <img src="https://prd.place/60?id=25" class="w-15 h-15 rounded-lg border border-neutral-300 flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+                <img src="https://prd.place/60?id=8" class="w-15 h-15 rounded-lg border border-neutral-300 flex-shrink-0 opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+            </div>
+        </section>
+
+        <!-- Product Information Section -->
+        <section class="p-4 space-y-4">
+            <div class="space-y-3">                
+                <!-- Category and Stock Info -->                
+                 <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-primary px-3 py-1 rounded-full font-medium" style="background-color: rgba(4, 199, 208, 0.1);">Daily Care</span>
+                        <span class="text-xs text-primary px-2 py-1 rounded-full font-medium" style="background-color: rgba(4, 199, 208, 0.15);">Nahoa</span>
+                    </div><div class="text-right px-2 py-1 rounded-lg leading-none" style="background-color: rgba(40, 196, 129, 0.12);">
+                        <div class="text-xs text-success-600 font-medium">In Stock</div>
+                        <div class="text-xs text-success-700">24 units</div>
+                    </div>
+                </div>
+                
+                <!-- Product Name and Pricing -->                
+                 <div class="flex items-start justify-between">
+                    <h2 class="text-xl font-bold text-neutral-900 leading-tight flex-1 pr-4">
+                        Nahoa Disposable Pull Ups - XXL Unisex
+                    </h2>                    <div class="text-right flex-shrink-0">
+                        <div class="text-xl font-bold text-neutral-900">₹50</div>
+                        <div class="text-sm text-neutral-500 line-through">₹60</div>
+                        <div class="text-xs bg-success-100 text-success-600 px-2 py-1 rounded font-semibold">Save ₹10</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Codes and Stock -->            
+             <div class="grid grid-cols-2 gap-4 text-sm bg-neutral-200 p-4 rounded-lg">
+                <div>
+                    <span class="text-neutral-600">Product Code:</span>
+                    <p class="font-semibold text-neutral-800">NH0005</p>
+                </div>
+                <div>
+                    <span class="text-neutral-600">SKU:</span>
+                    <p class="font-semibold text-neutral-800">THPL-NH-05</p>
+                </div>
+            </div><!-- Ratings Section -->
+            <div class="flex items-center justify-between p-4 rounded-lg">
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center space-x-1">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star text-sm"></i>
+                            <i class="fas fa-star text-sm"></i>
+                            <i class="fas fa-star text-sm"></i>
+                            <i class="fas fa-star text-sm"></i>
+                            <i class="fas fa-star-half-alt text-sm"></i>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-800">4.5</span>
+                    </div>
+                    <span class="text-sm text-gray-500">(12 Ratings)</span>
+                </div>
+                <button class="text-primary hover:text-primary-600 text-sm font-medium flex items-center space-x-1">
+                    <span>View All</span>
+                    <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                </button>
+            </div>            <!-- Variant Selector -->
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-sm font-semibold text-neutral-800 mb-3">Size</h3>
+                    <div class="flex space-x-2">
+                        <button class="size-option px-4 py-2 border border-neutral-300 text-neutral-700 rounded-lg text-sm font-medium">
+                            XL
+                        </button>
+                        <button class="size-option px-4 py-2 border-2 border-neutral-300 text-neutral-700 rounded-lg text-sm font-medium selected">
+                            XXL
+                        </button>
+                        <button class="size-option px-4 py-2 border border-neutral-300 text-neutral-700 rounded-lg text-sm font-medium">
+                            XXXL
+                        </button>
+                    </div>
+                </div>
+                  <!-- Offer Timer -->
+                <div class="text-white p-4 rounded-lg shadow-elevation-medium" style="background: linear-gradient(135deg, var(--primary-400), var(--primary-500));">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="zap" class="w-4 h-4"></i>
+                            <span class="text-sm font-medium">Limited Time Offer</span>
+                        </div>
+                        <div class="flex items-center space-x-1 text-sm font-bold">
+                            <span>Ends in:</span>
+                            <span id="timer" class="bg-white px-2 py-1 rounded text-xs font-mono" style="color: var(--primary-500);">23:45:12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Details - Should be read and loaded from JSON file given with your assessment -->            
+             <div class="space-y-3">
+                <h3 class="text-lg font-semibold text-neutral-800">Product Details</h3>
+                <div class="space-y-3 text-sm text-neutral-600">
+                    <div class="flex items-center space-x-3 p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="package" class="w-4 h-4 text-secondary"></i>
+                        <div>
+                            <span class="font-medium text-neutral-800">Material:</span>
+                            <span class="ml-2">Non Woven</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="users" class="w-4 h-4 text-success-400"></i>
+                        <div>
+                            <span class="font-medium text-neutral-800">Gender:</span>
+                            <span class="ml-2">Unisex</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="recycle" class="w-4 h-4 text-accent-500"></i>
+                        <div>
+                            <span class="font-medium text-neutral-800">Condition:</span>
+                            <span class="ml-2">Disposable</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="tag" class="w-4 h-4 text-warning-500"></i>
+                        <div>
+                            <span class="font-medium text-neutral-800">Type:</span>
+                            <span class="ml-2">Pull Ups</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="box" class="w-4 h-4 text-warning-500"></i>
+                        <div>
+                            <span class="font-medium text-neutral-800">Packaging:</span>
+                            <span class="ml-2">Box (2 Pants)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features - Should be read and loaded from JSON file given with your assessment -->
+             <div class="space-y-3">
+                <h3 class="text-lg font-semibold text-neutral-800">Key Features</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex items-center space-x-2 text-sm p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="droplets" class="w-4 h-4 text-warning-500"></i>
+                        <span>Super Absorbent</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="wind" class="w-4 h-4 text-success-400"></i>
+                        <span>Breathable</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="heart" class="w-4 h-4 text-accent-500"></i>
+                        <span>Soft & Gentle</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-sm p-3 bg-neutral-200 rounded-lg">
+                        <i data-lucide="shield" class="w-4 h-4 text-secondary"></i>
+                        <span>Leak Protection</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Bottom Spacing for Fixed Bar -->
+            <div class="h-20"></div>
+        </section>
+
+        <!-- Fixed Bottom Action Bar -->
+        <div class="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-sm bg-neutral-100 border-t border-neutral-200 p-4 shadow-elevation-large">
+            <div class="flex items-center space-x-3">
+                <!-- Favorite Button (10% space) -->
+                <button id="bottom-favorite-btn" class="flex-shrink-0 w-12 h-12 bg-neutral-200 rounded-full flex items-center justify-center hover:bg-neutral-300 transition-all transform active:scale-95">
+                    <i data-lucide="heart" class="text-neutral-600 w-5 h-5"></i>
+                </button>
+                
+                <!-- Add to Cart Button (80% space) -->
+                <button id="add-to-cart-btn" class="flex-1 gradient-primary text-white py-3 px-6 rounded-full font-semibold text-center transition-all transform active:scale-95 shadow-elevation-medium hover:shadow-elevation-large">
+                    <span class="flex items-center justify-center space-x-2">
+                        <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                        <span>Add to Cart</span>
+                    </span>
+                </button>
+                
+                <!-- Share Button (10% space) -->
+                <button class="flex-shrink-0 w-12 h-12 bg-neutral-200 rounded-full flex items-center justify-center hover:bg-neutral-300 transition-all transform active:scale-95">
+                    <i data-lucide="share-2" class="text-neutral-600 w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        // Timer countdown functionality
+        function updateTimer() {
+            const timerElement = document.getElementById('timer');
+            if (timerElement) {
+                let time = timerElement.textContent.split(':');
+                let hours = parseInt(time[0]);
+                let minutes = parseInt(time[1]);
+                let seconds = parseInt(time[2]);
+                
+                if (seconds > 0) {
+                    seconds--;
+                } else if (minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                } else if (hours > 0) {
+                    hours--;
+                    minutes = 59;
+                    seconds = 59;
+                }
+                
+                timerElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+        }
+          // Update timer every second - please use proper Android timer in your tech assessment
+        setInterval(updateTimer, 1000);
+        
+        // Size variant selection
+        document.querySelectorAll('.size-option').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.size-option').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+                
+                this.classList.add('bounce-in');
+                setTimeout(() => {
+                    this.classList.remove('bounce-in');
+                }, 300);
+            });
+        });
+        // Favorite button 
+        const favoriteBtn = document.getElementById('bottom-favorite-btn');
+        
+        let isFavorited = false;
+        
+        if (favoriteBtn) {
+            favoriteBtn.addEventListener('click', function() {
+                const icon = this.querySelector('[data-lucide="heart"]');
+                
+                if (isFavorited) {
+                    icon.style.fill = 'none';
+                    icon.style.color = 'var(--neutral-600)';
+                    isFavorited = false;
+                } else {
+                    icon.style.fill = 'var(--error-400)';
+                    icon.style.color = 'var(--error-400)';
+                    isFavorited = true;
+                    
+                    this.classList.add('bounce-in');
+                    setTimeout(() => {
+                        this.classList.remove('bounce-in');
+                    }, 300);
+                }
+            });
+        }
+        
+        // Add to cart button 
+        const addToCartBtn = document.getElementById('add-to-cart-btn');
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function() {
+                const originalContent = this.innerHTML;
+                this.innerHTML = '<span class="flex items-center justify-center space-x-2"><i data-lucide="check-circle" class="w-4 h-4"></i><span>Added!</span></span>';
+                
+                lucide.createIcons();
+                
+                this.style.background = 'var(--success-400)';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalContent;
+                    this.style.background = '';
+                    this.classList.add('gradient-primary');
+                    lucide.createIcons();
+                }, 2000);
+            });
+        }
+        
+        // Thumbnail image switching - Should work with the main image, in a real app you would change the source of the main image
+        document.querySelectorAll('.flex.space-x-3.p-4 img').forEach((thumb, index) => {
+            thumb.addEventListener('click', function() {
+                document.querySelectorAll('.flex.space-x-3.p-4 img').forEach(img => {
+                    img.classList.remove('border-primary-400');
+                    img.classList.add('border-neutral-300', 'opacity-70');
+                });
+                
+                this.classList.remove('border-neutral-300', 'opacity-70');
+                this.classList.add('border-primary-400');
+                this.style.opacity = '1';
+                
+                const mainImage = document.querySelector('.h-80 img');
+                if (mainImage) {
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => {
+                        mainImage.style.opacity = '1';
+                    }, 150);
+                }
+            });
+        });
+        
+        document.querySelector('header h1').addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('bounce-in');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.grid.grid-cols-2 > div, .bg-neutral-200.p-4.rounded-lg').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
