@@ -1,8 +1,5 @@
 # SDUI Product Details Page
 
-## Overview
-Create an Android application that demonstrates modern Android development practices by building a **Product Details Page** using **Server-Driven UI (SDUI)** principles with **Jetpack Compose** and **Material Design**.
-
 ## Duration
 **Estimated Time: 3 hours**
 
@@ -25,7 +22,6 @@ Build a single-screen Android application that:
 - **Design System**: Material Design 
 - **Minimum SDK**: API 24 (Android 7.0)
 - **Target SDK**: API 34 (Android 14)
-
 
 ---
 

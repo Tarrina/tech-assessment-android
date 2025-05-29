@@ -1,8 +1,5 @@
 # Angry Pongers
 
-## Overview
-Create a modern Android game application that implements the classic pong game concept using **Jetpack Compose**, **Canvas API**, and **modern Android architecture patterns**. This exercise tests your ability to handle real-time graphics, game state management, and complex UI animations.
-
 ## Duration
 **Estimated Time: 3 hours**
 
@@ -144,7 +141,6 @@ initialVelocityY = random(MIN_SPEED, MAX_SPEED) * randomSign()
 - **Tiny Random Nudges**: Each frame, give balls a tiny random push to create natural, unpredictable movement
 - **Random Starting Positions**: When balls are created, place them at random spots (but not too close to walls)
 - **Random Starting Speed**: Give new balls random speed and direction within safe limits
-- **Chaos Theory**: These small random changes create completely different game outcomes, like butterfly effect
 
 ---
 
@@ -182,7 +178,7 @@ val NIGHT_BALL_COLOR = Color(0xFFD9E8E3) // MysticMint
 ```
 
 **What these settings control:**
-- **Game Board**: Creates a 600x600 pixel canvas divided into 24x24 squares (each square is 25 pixels)
+- **Game Board**: Define game board size 600x600 pixel that are divided into 24x24 squares (each square is 25 pixels)
 - **Ball Physics**: Balls are half the size of squares, with speed limits to keep gameplay balanced
 - **Performance**: Targets 100 FPS for ultra-smooth gameplay (10ms per frame)
 - **Visual Theme**: Uses contrasting colors so Day and Night teams are clearly distinguishable
@@ -296,7 +292,7 @@ class GameEngine {
 #### Repository Pattern
 **Handles saving/loading game data - your game's memory system**
 
-The repository manages all data persistence, whether that's saving high scores, game state, or user preferences. It hides the complexity of data storage from the rest of your app.
+The repository manages all data persistence, whether that's saving high scores, game state, or user preferences. It hides the complexity of data storage from the rest of your app. For this take home exercise, you don't need to persist the scores on a database, in-memory state is fine.
 
 ```kotlin
 interface GameRepository {
@@ -309,29 +305,6 @@ interface GameRepository {
 **What the repository handles:**
 - **Game Persistence**: Save current game so players can resume later
 - **High Scores**: Track best games and longest battles
----
-
-## Advanced Features
-
-### 1. Performance
-- **Frame Rate Management**: Maintain stable 100 FPS
-- **Memory Efficiency**: Reuse objects, avoid allocations in game loop
-- **Canvas Optimization**: Efficient drawing operations
-- **State Management**: Minimize recompositions
-
-### 2. Game Enhancements
-- **Power-ups**: Special squares that affect ball behavior
-- **Multiple Balls**: Add more balls dynamically
-- **Different Game Modes**: Timed matches, first-to-X wins
-- **Visual Effects**: Particle systems, trail effects
-- **Sound Effects**: Ball bounces, territory capture sounds
-
-### 3. UI/UX Features
-- **Pause/Resume**: Proper game state management
-- **Statistics**: Track games played, longest battles, win ratios
-- **Settings**: Adjustable ball speed, grid size, colors
-- **Accessibility**: Screen reader support, high contrast mode
-
 ---
 
 ## End State Conditions
@@ -387,13 +360,11 @@ fun checkGameOver(gameState: GameState): GameResult? {
 
 ### Technical Implementation (40%)
 - **Game Engine Logic**: Correct physics implementation and collision detection
-- **Architecture Quality**: Clean separation of concerns, proper MVVM implementation
 - **Performance**: Smooth 60+ FPS gameplay with efficient resource usage
 - **Code Quality**: Readable, maintainable Kotlin code with proper error handling
 
 ### UI/UX Implementation (25%)
-- **Canvas Mastery**: Efficient and smooth Canvas operations
-- **Material Design**: Proper Material 3 theming and component usage
+- **Material Design**: Proper Material theming and component usage
 - **Responsive Design**: Works well on different screen sizes
 - **Visual Polish**: Smooth animations and appealing visual design
 
@@ -423,7 +394,6 @@ fun checkGameOver(gameState: GameState): GameResult? {
 - **README.md** with:
   - Setup and run instructions
   - Game rules and controls explanation
-  - Architecture overview and design decisions
   - Performance considerations and optimizations
   - Known issues or limitations
 

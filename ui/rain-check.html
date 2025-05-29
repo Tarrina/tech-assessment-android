@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>RainCheck - Weather App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        :root {
+            /* Neutral Colors */
+            --neutral-100: #FFFFFF;
+            --neutral-200: #F8F8F9;
+            --neutral-300: #E8E8EC;
+            --neutral-400: #C5C5CE;
+            --neutral-500: #9F9FAC;
+            --neutral-600: #6E6E7A;
+            --neutral-700: #4A4A54;
+            --neutral-800: #26262C;
+            --neutral-900: #141416;
+            
+            /* Primary Colors */
+            --primary-100: #E5F8F9;
+            --primary-200: #A6EBF0;
+            --primary-300: #66DDE3;
+            --primary-400: #04C7D0;
+            --primary-500: #03A2AA;
+            --primary-600: #027A80;
+            
+            /* Secondary Colors */
+            --secondary-100: #EEF4F8;
+            --secondary-200: #C8D8E3;
+            --secondary-300: #9DB7C7;
+            --secondary-400: #7296AB;
+            --secondary-500: #4B708E;
+            --secondary-600: #2E4F6F;
+              /* Accent Colors */
+            --accent-100: #E5F2F9;
+            --accent-200: #B3E0F2;
+            --accent-300: #80CCEB;
+            --accent-400: #4DB8E5;
+            --accent-500: #1A9FDD;
+
+            /* Elevations */
+            --elevation-small: 0 2px 4px rgba(31, 31, 37, 0.05);
+            --elevation-medium: 0 4px 8px rgba(31, 31, 37, 0.1);
+            --elevation-large: 0 8px 16px rgba(31, 31, 37, 0.15);
+            --elevation-xlarge: 0 12px 24px rgba(31, 31, 37, 0.2);
+        }
+
+        .shadow-elevation-xlarge { 
+            box-shadow: var(--elevation-xlarge); 
+        }
+
+        .weather-gradient {
+            background: linear-gradient(135deg, var(--primary-400) 0%, var(--secondary-600) 100%);
+        }
+
+        .bounce-slow {
+            animation: bounce 3s infinite;
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .slide-up {
+            transform: translateY(100%);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .slide-up.active {
+            transform: translateY(0);
+        }
+
+        .fade-out {
+            opacity: 1;
+            transition: opacity 0.6s ease-out;
+        }
+
+        .fade-out.hidden {
+            opacity: 0;
+        }
+
+        .pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }        .mobile-container {
+            max-width: 375px;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            min-height: 812px;
+            position: relative;
+        }        .mobile-screen {
+            overflow: hidden;
+            background: var(--neutral-100);
+            min-height: 812px;
+            position: relative;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .date-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+
+        .date-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }        .date-cell:hover {
+            background: rgba(4, 199, 208, 0.1);
+        }
+
+        .date-cell.disabled {
+            color: var(--neutral-400);
+            cursor: not-allowed;
+        }
+
+        .date-cell.disabled:hover {
+            background: transparent;
+        }
+
+        .date-cell.selected {
+            background: linear-gradient(135deg, var(--primary-400) 0%, var(--primary-600) 100%);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .date-cell.today {
+            background: var(--primary-100);
+            color: var(--primary-600);
+            font-weight: 600;
+        }
+
+        .flatpickr-calendar {
+            background: var(--neutral-100);
+            border: 1px solid var(--neutral-300);
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(31, 31, 37, 0.15);
+        }
+
+        .flatpickr-day.selected {
+            background: var(--primary-400);
+            border-color: var(--primary-400);
+        }
+
+        .flatpickr-day.today {
+            border-color: var(--primary-400);
+            color: var(--primary-600);
+        }
+
+        .flatpickr-day:hover {
+            background: var(--primary-100);
+            border-color: var(--primary-300);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center p-4 bg-neutral-200 font-sans">
+    <div class="max-w-sm mx-auto bg-neutral-100 shadow-elevation-xlarge min-h-screen relative">
+        <div class="mobile-screen">
+            <!-- Initial Picker Screen -->            <div id="picker-screen" class="weather-gradient min-h-full relative overflow-hidden fade-out">
+                <div class="absolute top-20 left-8 w-12 h-12 bg-white/10 rounded-full float"></div>
+                <div class="absolute top-40 right-12 w-8 h-8 bg-white/15 rounded-full float" style="animation-delay: -2s;"></div>
+                <div class="absolute top-60 left-16 w-6 h-6 bg-white/10 rounded-full float" style="animation-delay: -4s;"></div>
+                <div class="absolute bottom-40 right-8 w-10 h-10 bg-white/10 rounded-full float" style="animation-delay: -1s;"></div>
+
+                <div class="flex flex-col items-center justify-center min-h-full px-8 py-16 relative z-10">
+                    <div class="relative mb-12">
+                        <div class="w-32 h-32 bg-white/20 rounded-full flex items-center justify-center bounce-slow">
+                            <i data-lucide="cloud-rain" class="w-16 h-16 text-white"></i>
+                        </div>
+                        <div class="absolute inset-0 w-32 h-32 border-2 border-white/30 rounded-full pulse-ring"></div>
+                        <div class="absolute inset-0 w-32 h-32 border-2 border-white/20 rounded-full pulse-ring" style="animation-delay: 0.5s;"></div>
+                    </div>
+
+                    <div class="text-center mb-16">
+                        <h1 class="text-white text-5xl font-bold mb-4">RainCheck</h1>
+                        <p class="text-white/80 text-lg leading-relaxed">
+                            Your friendly weather companion.<br>
+                            Never get caught in the rain again! 🌧️
+                        </p>
+                    </div>
+
+                    <!-- Date Selection -->
+                    <div class="w-full mb-8">
+                        <div class="bg-white/20 backdrop-blur-sm rounded-3xl p-5 border border-white/30">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <div class="text-white font-semibold text-lg">📅 Pick a Date</div>
+                                    <div class="text-white/80 text-sm">When do you want to check?</div>
+                                </div>
+                                <div class="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center">
+                                    <i data-lucide="calendar-heart" class="w-6 h-6 text-white"></i>
+                                </div>
+                            </div>
+
+                            <input type="text" id="date-picker" 
+                                class="w-full bg-white/30 rounded-2xl p-4 text-white placeholder-white/70 border-none focus:outline-none focus:ring-2 focus:ring-white/50 cursor-pointer"
+                                placeholder="Select date" readonly>
+                        </div>
+                    </div>
+
+                    <div class="w-full mb-12 space-y-4">
+                        <div class="flex items-center space-x-4 bg-white/15 backdrop-blur-sm rounded-2xl p-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i data-lucide="calendar" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-semibold">Future Forecast</div>
+                                <div class="text-white/70 text-sm">Check weather up to 7 days ahead</div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 bg-white/15 backdrop-blur-sm rounded-2xl p-4">
+                            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                                <i data-lucide="umbrella" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-white font-semibold">Rain Alerts</div>
+                                <div class="text-white/70 text-sm">Know exactly when to bring an umbrella</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="start-btn" class="w-full font-bold text-xl py-6 rounded-3xl shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-3xl active:scale-95" style="background-color: var(--neutral-100); color: var(--primary-600);">
+                        <div class="flex items-center justify-center space-x-3">
+                            <span>Do I need a RainCheck?</span>
+                            <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                        </div>
+                    </button>
+
+                    <div class="text-white/60 text-sm mt-6 text-center">
+                        Tap to start checking the weather ☀️
+                    </div>
+                </div>
+            </div>            <!-- Main App Screen -->
+            <div id="main-screen" class="weather-gradient min-h-full relative overflow-hidden slide-up">
+                <div class="absolute top-20 left-4 w-8 h-8 bg-white/20 rounded-full float"></div>
+                <div class="absolute top-32 right-8 w-6 h-6 bg-white/15 rounded-full float" style="animation-delay: -2s;"></div>
+                <div class="absolute top-48 left-12 w-4 h-4 bg-white/10 rounded-full float" style="animation-delay: -4s;"></div>
+
+                <!-- Header -->
+                <div class="px-6 pt-12 pb-6 relative z-10">
+                    <div class="flex items-center justify-between mb-6">
+                        <button id="back-btn" class="p-2 rounded-full bg-white/20 backdrop-blur">
+                            <i data-lucide="arrow-left" class="w-5 h-5 text-white"></i>
+                        </button>
+                        <div class="text-center">
+                            <h1 class="text-white text-2xl font-bold">RainCheck</h1>
+                            <div class="text-white/80 text-sm">Your weather companion</div>
+                        </div>
+                        <div class="p-2"></div>
+                    </div>
+                </div>
+
+                <!-- Location Bubble -->
+                <div class="px-6 mb-6">
+                    <div class="bg-white/25 backdrop-blur-sm rounded-3xl p-5 border border-white/30">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-white font-semibold text-lg">Ahmedabad</div>
+                                <div class="text-white/80 text-sm">Auto-detected location</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rain Prediction -->
+                <div class="px-6 mb-6">
+                    <div class="bg-white rounded-3xl p-8 shadow-2xl">
+                        <div class="text-center">
+                            <div class="text-lg mb-4" style="color: var(--neutral-600);">🌧️ Will it rain on <span id="rain-check-date">tomorrow</span>?</div>
+
+                            <div class="relative mb-6">
+                                <div class="text-6xl font-black mb-2" style="color: var(--primary-600);">YES!</div>
+                                <div class="absolute -top-2 -right-2 text-2xl">💧</div>
+                            </div>
+
+                            <div class="rounded-2xl p-4 mb-4" style="background-color: var(--primary-100);">
+                                <div class="font-semibold mb-2" style="color: var(--primary-600);">Rain Probability</div>
+                                <div class="flex items-center justify-center space-x-2">
+                                    <div class="flex-1 rounded-full h-3 overflow-hidden" style="background-color: var(--primary-200);">
+                                        <div class="h-full rounded-full w-3/4 transition-all duration-1000" style="background-color: var(--primary-500);"></div>
+                                    </div>
+                                    <span class="font-bold" style="color: var(--primary-600);">75%</span>
+                                </div>
+                            </div>
+
+                            <div class="text-sm" style="color: var(--neutral-600);">
+                                🌂 Don't forget your umbrella!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Details -->
+                <div class="px-6 mb-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white/25 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
+                            <div class="text-center">
+                                <div class="text-3xl mb-2">🌡️</div>
+                                <div class="text-white text-2xl font-bold">18°C</div>
+                                <div class="text-white/80 text-sm">Temperature</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/25 backdrop-blur-sm rounded-2xl p-4 border border-white/30">
+                            <div class="text-center">
+                                <div class="text-3xl mb-2">💧</div>
+                                <div class="text-white text-2xl font-bold">82%</div>
+                                <div class="text-white/80 text-sm">Humidity</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 mb-8">
+                    <div class="bg-white/20 backdrop-blur-sm rounded-3xl p-5 border border-white/30">
+                        <div class="flex items-center space-x-4">
+                            <div class="text-4xl">⛅</div>
+                            <div>
+                                <div class="text-white font-semibold text-lg">Partly Cloudy</div>
+                                <div class="text-white/80 text-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-6 pb-8">
+                    <div class="text-center">
+                        <div class="text-white/60 text-xs mb-2">Updated: 2 minutes ago</div>
+                        <div class="text-white/50 text-xs">Powered by OpenWeatherMap</div>
+                    </div>
+                </div>
+            </div>        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        let selectedDate = new Date();
+        selectedDate.setDate(selectedDate.getDate() + 1);
+
+        const dateFormats = {
+            full: { year: 'numeric', month: 'long', day: 'numeric' },
+            short: { weekday: 'long' }
+        };
+
+        function formatDateDisplay(date) {
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+
+            if (date.toDateString() === today.toDateString()) {
+                return 'Today';
+            } else if (date.toDateString() === tomorrow.toDateString()) {
+                return 'Tomorrow';
+            } else {
+                return date.toLocaleDateString('en-US', dateFormats.short);
+            }
+        }
+
+        function updateDateDisplay() {
+            const rainCheckDate = document.getElementById('rain-check-date');
+            if (rainCheckDate) {
+                rainCheckDate.textContent = formatDateDisplay(selectedDate).toLowerCase();
+            }
+        }
+
+        // Initialize Flatpickr
+        const datePicker = flatpickr("#date-picker", {
+            dateFormat: "F j, Y",
+            defaultDate: selectedDate,
+            minDate: "today",
+            maxDate: new Date().fp_incr(7),
+            theme: "light",
+            onChange: function(selectedDates, dateStr, instance) {
+                if (selectedDates.length > 0) {
+                    selectedDate = selectedDates[0];
+                    updateDateDisplay();
+                }
+            }
+        });
+
+        const pickerScreen = document.getElementById('picker-screen');
+        const mainScreen = document.getElementById('main-screen');
+        const startBtn = document.getElementById('start-btn');
+        const backBtn = document.getElementById('back-btn');
+
+        startBtn.addEventListener('click', () => {
+            startBtn.innerHTML = `
+                <div class="flex items-center justify-center space-x-3">
+                    <div class="w-6 h-6 border-2 border-t-transparent rounded-full animate-spin" style="border-color: var(--primary-600); border-top-color: transparent;"></div>
+                    <span>Loading...</span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                pickerScreen.classList.add('hidden');
+                mainScreen.classList.add('active');
+                updateDateDisplay();
+                setTimeout(() => lucide.createIcons(), 100);
+            }, 1000);
+        });
+
+        backBtn.addEventListener('click', () => {
+            mainScreen.classList.remove('active');
+            pickerScreen.classList.remove('hidden');
+
+            setTimeout(() => {
+                startBtn.innerHTML = `
+                    <div class="flex items-center justify-center space-x-3">
+                        <span>Do I need a RainCheck?</span>
+                        <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </div>
+                `;
+                lucide.createIcons();
+            }, 800);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDateDisplay();
+            
+            const featureCards = document.querySelectorAll('#picker-screen .bg-white\\/15');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 500 + (index * 200));
+            });
+        });
+    </script>
+</body>
+
+</html>
