@@ -11,6 +11,8 @@ Build a single-screen Android application that:
 4. Demonstrates modern Android architecture and design principles
 5. Implements Material Design 3 theming and components
 
+**UI Reference**: Use `product-detail.html` in the `ui/` folder as inspiration for the visual design and user experience flow.
+
 ---
 
 ## Technical Requirements
